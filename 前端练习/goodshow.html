@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>商品展示</title>
+        <link type="text/css" rel="stylesheet" href="../vue/index.css">
+		<!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+        <script type="text/javascript" src="../vue/vue.js"></script>
+		<script type="text/javascript" src="../vue/index.js"></script>
+		<!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+        <style>
+            #box ul{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            #box li{
+                padding: 3px;
+                list-style: none;
+                margin-right: 15px;
+                border: 1px solid #eee;
+            }
+            #box img{
+                width: 200px;
+                height: 150px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="" id="box">
+            <ul>
+                <li v-for="v in json.list">
+                    <img v-bind:src="v.src" alt="">
+                    <h4>{{v.des}}</h4>
+                    <p>{{v.price}}元</p>
+                </li>
+            </ul>
+        </div>
+        <script>
+            
+            new Vue({
+			el:'#box',
+			data:{
+				json:{
+					list:[
+						{
+							src:'http://49.232.81.174:8080/pic/0b7a3995751b4963a011fb2eb3077756.jpg',
+							des:'这是第一个描述',
+							price:198
+						},
+						{
+							src:'images/2.jpg',
+							des:'这是第二个描述',
+							price:198
+						},
+						{
+							src:'images/3.jpg',
+							des:'这是第三个描述',
+							price:211
+						},
+						{
+							src:'images/1.jpg',
+							des:'这是第一个描述',
+							price:198
+						},
+						{
+							src:'images/3.jpg',
+							des:'这是第二个描述',
+							price:112
+						},
+						{
+							src:'images/3.jpg',
+							des:'这是第三个描述',
+							price:423
+						}
+					]
+				}
+			}
+		})
+        </script>
+    </body>
+</html>

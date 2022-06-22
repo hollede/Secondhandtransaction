@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>二手交易平台</title>
+		<link type="text/css" rel="stylesheet" href="../vue/index.css">
+		<!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <script type="text/javascript" src="../vue/vue.js"></script>
+		<script type="text/javascript" src="../vue/index.js"></script>
+		<!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <style>
+            html,body,#app{
+                margin: 0px;
+                padding: 0px;
+            }
+            .el-header, .el-footer {
+              background-color: #B3C0D1;
+              color: #333;
+              line-height: 400px;
+             
+            }
+            
+            .el-aside {
+              background-color: #D3DCE6;
+              color: #333;
+              line-height: 200px;
+            }
+            
+            .el-main {
+              background-color: #E9EEF3;
+              color: #333;
+              text-align: center;
+              line-height: 700px;
+            }
+            
+            body > .el-container {
+              margin-bottom: 40px;
+            }
+            
+            .el-container:nth-child(5) .el-aside,
+            .el-container:nth-child(6) .el-aside {
+              line-height: 260px;
+            }
+            
+            .el-container:nth-child(7) .el-aside {
+              line-height: 320px;
+            }
+          </style>
+    </head>
+    <body>
+        <div id="app">
+            <el-container>
+                <el-header>
+                    <el-menu
+                        :default-active="'1'"
+                        class="el-menu-demo"
+                        mode="horizontal"
+                        background-color="#545c64"
+                        text-color="#fff"
+                        active-text-color="#ffd04b">
+                        <el-menu-item index="1" @click="goodshow">商品中心</el-menu-item>
+                        <el-submenu index="2">
+                            <template slot="title">个人中心</template>
+                            <el-menu-item index="2-1" @click="userinfoshow">个人信息</el-menu-item>
+                            <el-menu-item index="2-2">申请成为商家</el-menu-item>
+                            <el-submenu index="2-3">
+                                <template slot="title">管理员权限</template>
+                                <el-menu-item index="2-3-1">用户列表</el-menu-item>
+                                <el-menu-item index="2-3-2">商家审核</el-menu-item>
+                                <el-menu-item index="2-3-3">管理员审核</el-menu-item>
+                            </el-submenu>
+                            <el-menu-item index="2-4" @click="logout">退出登录</el-menu=item>
+                        </el-submenu>
+                        <el-menu-item index="3" @click="useroedershow">个人订单</el-menu-item>
+                        <el-menu-item index="4" disabled=""><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+                        </el-menu>
+                </el-header>
+                <el-main >
+                  <!-- <el-tabs v-model="mainurl" type="card" closable >
+                    <el-tab-pane
+                            v-for="(item, index) in maincontent"
+                            :key="item.name"
+                            :label="item.title"
+                            :name="item.name">
+                          <iframe :src="mainurl" frameborder="0" width="100%" height="400px;"></iframe>
+                        </el-tab-pane>
+                  </el-tabs> -->
+                  
+                  <iframe :src="mainurl" frameborder="0" width="100%" height="400px;"></iframe>
+                </el-main>
+            </el-container>
+        </div>
+       
+        <script>
+            var url = document.location.href;
+            var urlList = url.split('=');//“=”代表你拿哪个标点符号后的值例如：“/”“？”
+            var a = urlList[urlList.length-1].split('.')[0];
+            alert(a);
+            if (isNaN(Number(a,10))){
+              location.href="login.html";
+            }else{
+              alert("登陆成功！");
+            }
+            var vm = new Vue({
+                el:'#app',
+                data:{
+                  mainurl:"D:\\我的文件\\学习文件\\大三下课程\\软件开发实践\\前端代码\\前端练习\\goodshow.html",
+                  leftMenus:[],
+                  userid:a,
+                  maincontent:[{
+                    title:'商品展示',
+                    name:'0',
+                    url:'D:\\我的文件\\学习文件\\大三下课程\\软件开发实践\\前端代码\\前端练习\\goodshow.html'
+                  },{
+                    title:'用户信息',
+                    name:'1',
+                    url:'D:\\我的文件\\学习文件\\大三下课程\\软件开发实践\\前端代码\\前端练习\\userinfo.html'
+                  },{
+                    title:'用户订单',
+                    name:'2',
+                    url:'D:\\我的文件\\学习文件\\大三下课程\\软件开发实践\\前端代码\\前端练习\\userorder.html'
+                  }]
+
+                },
+                create(){
+                  
+                  this.initMenus();
+                },
+                methods:{
+                  initMenus(){
+                    //axios.get
+                   
+                  },
+                  goodshow(){
+                    
+                    this.mainurl=this.maincontent[0].url;
+                  },
+                  userinfoshow(){
+                    this.mainurl=this.maincontent[1].url;
+                  },
+                  useroedershow(){
+                    this.mainurl=this.maincontent[2].url;
+                  },
+                  logout(){
+                    location.href="login.html"
+                  },
+                  geturl(){
+                    return this.data.mainurl;
+                  }
+                }
+            });
+            
+
+            
+        </script>
+    </body>
+</html>

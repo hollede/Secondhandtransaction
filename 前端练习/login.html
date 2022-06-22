@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>登录页面</title>
+		<link type="text/css" rel="stylesheet" href="../vue/index.css">
+		<!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+        <script type="text/javascript" src="../vue/vue.js"></script>
+		<script type="text/javascript" src="../vue/index.js"></script>
+		<!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+		<style>
+			body,
+			#loginBox{
+				width: 450px;
+				height: 300px;
+				background: white;
+				border-radius: 3px;
+				position: absolute;
+				left: 50%;
+				top: 30%;
+				transform: translate(-50%,-50%);
+			}
+			#login_form{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				padding: 0 20px;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- app1、app2的区别 -->
+		<div id='login' >
+			<div id="loginBox">
+				<h1 align="center">登录界面</h1>
+
+				<el-form label-width="88px" :model="loginForm" :rules="loginFormRules" ref="loginFormRef" class="login_form">
+					<el-form-item label="id:" prop="id">
+						<el-input v-model="loginForm.id"></el-input>
+					</el-form-item>
+					
+					<el-form-item label="password:" prop="password">
+						<el-input v-model="loginForm.password"></el-input>
+					</el-form-item>
+					
+					
+					<el-form-item>
+						<el-button type="primary" @click="login">登录</el-button>
+					</el-form-item>
+				</el-form>
+			
+			</div>
+            
+		</div>
+		<!-- <script src="vue.js"></script> -->
+		<script>
+			
+			//post请求：用户注册信息
+			const vm=new Vue({
+				el:'#login',
+				data:{
+					loginForm:{
+						"id":"2019011129",
+						
+						
+						"password":"123789"
+						
+					},
+					loginFormRules:{
+						id:[
+							{required: true,message:'请输入id',trigger:'blur'}
+						],
+						
+						password:[
+							{required: true,message:'请输入password',trigger:'blur'}
+						]
+						
+					}
+				},
+				methods:{
+					login(){
+						this.$refs['loginFormRef'].validate((valid) => {
+							if (valid) {
+								alert('submit!');
+								axios.get('http://49.232.81.174:8080/users/login?userId='+this.loginForm.id+'&password='+this.loginForm.password,
+								).then(function(reult){
+									console.log(reult)
+									if (reult.data.status == 100){
+										/*跳转传值页面*/
+										window.location.href="main.html?id="+vm.loginForm.id+""
+
+									}else{
+										alert("登陆失败！")
+									}
+								})
+							} else {
+								console.log('error submit!!');
+								return false;
+							}
+						});
+					}
+				}
+			}
+			)
+			console.log(vm)
+		</script>
+        <script type="text/javascript" >
+            Vue.config.productionTip  = false  //组织vue启动时生成生产提示
+        </script>
+	</body>
+</html>

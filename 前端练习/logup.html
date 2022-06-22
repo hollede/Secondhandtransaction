@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>注册页面</title>
+		<link type="text/css" rel="stylesheet" href="../vue/index.css">
+		<!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+        <script type="text/javascript" src="../vue/vue.js"></script>
+		<script type="text/javascript" src="../vue/index.js"></script>
+		<!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+		<style>
+			body,
+			#logupBox{
+				width: 450px;
+				height: 300px;
+				background: white;
+				border-radius: 3px;
+				position: absolute;
+				left: 50%;
+				top: 30%;
+				transform: translate(-50%,-50%);
+			}
+			#logup_form{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				padding: 0 20px;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- app1、app2的区别 -->
+		<div id='logup' >
+			<div id="logupBox">
+				<h1 align="center">注册界面</h1>
+
+				<el-form label-width="88px" :model="logupForm" :rules="logupFormRules" ref="logupFormRef" class="logup_form">
+					<el-form-item label="id:" prop="id">
+						<el-input v-model="logupForm.id"></el-input>
+					</el-form-item>
+					<el-form-item label="name:" prop="name">
+						<el-input v-model="logupForm.name"></el-input>
+					</el-form-item>
+					<el-form-item label="phone:" prop="phone">
+						<el-input v-model="logupForm.phone"></el-input>
+					</el-form-item>
+					<el-form-item label="password:" prop="password">
+						<el-input v-model="logupForm.password"></el-input>
+					</el-form-item>
+					<el-form-item label="sex:" prop="sex">
+						<el-input v-model="logupForm.sex"></el-input>
+					</el-form-item>
+					<el-form-item label="bankid:" prop="bankid">
+						<el-input v-model="logupForm.bankid"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="logup">注册</el-button>
+					</el-form-item>
+				</el-form>
+			
+			</div>
+            
+		</div>
+		<!-- <script src="vue.js"></script> -->
+		<script>
+			
+			//post请求：用户注册信息
+			const vm=new Vue({
+				el:'#logup',
+				data:{
+					logupForm:{
+						"id":"2019011129",
+						"name":"刘春远",
+						"phone":"15710035212",
+						"password":"123789",
+						"sex":"man",
+						"bankid":"2222222222222222"
+					},
+					logupFormRules:{
+						id:[
+							{required: true,message:'请输入id',trigger:'blur'}
+						],
+						name:[
+							{required: true,message:'请输入name',trigger:'blur'}
+						],
+						phone:[
+							{required: true,message:'请输入phone',trigger:'blur'}
+						],
+						password:[
+							{required: true,message:'请输入passwork',trigger:'blur'}
+						],
+						sex:[
+							{required: true,message:'请输入sex',trigger:'blur'}
+						],
+						bankid:[
+							{required: true,message:'请输入bankid',trigger:'blur'},
+							{min:16,max:16,message:'长度应为16',trigger:'blur'}
+						],
+					}
+				},
+				methods:{
+					logup(){
+						this.$refs['logupFormRef'].validate((valid) => {
+							if (valid) {
+								alert('submit!');
+								axios.post('http://49.232.81.174:8080/users/register',
+								{
+									"id":this.logupForm.id,
+									"name":this.logupForm.name,
+									"phone":this.logupForm.phone,
+									"sex":this.logupForm.sex,
+									"bank":this.logupForm.bankid,
+									"password":this.logupForm.password,
+									"type":0,
+									"admin":false
+								}).then(function(result){
+									if (result.data.status == 100){
+										window.location.href="main.html?id="+vm.loginForm.id+""
+									}else {
+										alert("注册失败！")
+									}
+								})
+							} else {
+								console.log('error submit!!');
+								return false;
+							}
+						});
+					}
+				}
+			}
+			)
+			console.log(vm)
+		</script>
+        <script type="text/javascript" >
+            Vue.config.productionTip  = false  //组织vue启动时生成生产提示
+        </script>
+	</body>
+</html>
